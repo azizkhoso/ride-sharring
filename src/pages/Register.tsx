@@ -4,11 +4,12 @@ import User, { userSchema } from '../models/User';
 import Form from '../components/Form';
 import useFetch from '../hooks/useFetch';
 import Error from '../components/Error';
+import { useNavigate } from 'react-router-dom';
 
 export default function Register() {
+  const navigate = useNavigate();
   const { isLoading, error, exec } = useFetch(User.create, {
-    onSuccess: (usr) => console.log({ usr }),
-    onError: (err) => console.log(err),
+    onSuccess: () => navigate('/login'),
     execOnMount: false,
   });
   return (

@@ -28,7 +28,8 @@ export default function useFetch<T>(
   };
 
   React.useEffect(() => {
-    if (!options.execOnMount) return;
+    if (!options.execOnMount && typeof options.execOnMount !== 'undefined')
+      return;
     else exec();
   }, []);
 

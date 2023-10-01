@@ -1,15 +1,4 @@
-import {
-  Box,
-  Heading,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Text,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 import { Case, Switch } from 'react-if';
 
@@ -18,40 +7,12 @@ import useFetch from '../../hooks/useFetch';
 import { IUser } from '../../models/User';
 import Loader from '../Loader';
 import Error from '../Error';
-
-interface ITableProps {
-  columns: string[];
-  rows?: Record<string, any>[];
-}
-
-function RenderTable(props: ITableProps) {
-  return (
-    <TableContainer>
-      <Table>
-        <Thead>
-          {props.columns.map((c) => (
-            <Th key={c}>{c}</Th>
-          ))}
-        </Thead>
-        <Tbody>
-          {props.rows?.map((r, ri) => (
-            <Tr key={ri}>
-              {Object.keys(r).map((k) => (
-                <Td key={k}>{r[k]}</Td>
-              ))}
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-    </TableContainer>
-  );
-}
+import RenderTable from '../RenderTable';
 
 export default function Users() {
   const [users, setUsers] = React.useState<IUser[]>([]);
   const { isLoading, error } = useFetch<IUser[]>(User.find, {
     onSuccess: (usrs) => setUsers(usrs),
-    execOnMount: true,
   });
   return (
     <Box className="flex flex-col">
@@ -68,7 +29,11 @@ export default function Users() {
         </Case>
         <Case condition={users.length > 0}>
           <RenderTable
-            columns={['ID', 'Name', 'Email', 'Balance']}
+            columns={[
+              { key: 'name', title: 'Name' },
+              { key: 'email', title: 'Email' },
+              { key: 'balance', title: 'Balance' },
+            ]}
             rows={users}
           />
         </Case>

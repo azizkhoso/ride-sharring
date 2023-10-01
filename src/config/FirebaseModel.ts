@@ -78,7 +78,7 @@ export default class FirebaseModel {
     try {
       const q = query(
         this.collection,
-        ...options.map((opt) => where(opt.key, opt.op, opt.value)),
+        ...(options?.map((opt) => where(opt.key, opt.op, opt.value)) || []),
       );
       const querySnapshot = await getDocs(q);
       const docs: any[] = [];
@@ -87,6 +87,7 @@ export default class FirebaseModel {
       );
       return docs;
     } catch (error: any) {
+      console.log({ error });
       if (typeof error === 'object') throw error?.message;
       else if (typeof error === 'string') throw error;
       else throw JSON.stringify(error || {});
@@ -95,8 +96,6 @@ export default class FirebaseModel {
 
   create = (data: Record<string, any>): Promise<string> =>
     new Promise((res, rej) => {
-      console.log('before constraints check');
-
       if (this.constraints.unique) {
         this.find([
           {

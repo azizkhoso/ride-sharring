@@ -18,6 +18,6 @@ export const userSchema = yup.object().shape({
   balance: yup.number().positive(),
 });
 
-const UserModel = new FirebaseModel('users', userSchema, { unique: 'email' });
+const User = new FirebaseModel('users', userSchema, { unique: 'email' });
 
-export default UserModel;
+export default User;

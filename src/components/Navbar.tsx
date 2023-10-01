@@ -27,6 +27,7 @@ const userLinks = [{ title: 'Dashboard', link: '/dashboard' }];
 const adminLinks = [
   { title: 'Dashboard', link: '/admin' },
   { title: 'Users ', link: '/admin/users' },
+  { title: 'Vehicles ', link: '/admin/vehicles' },
 ];
 
 const MobileMenu = (props: { isOpen: boolean; onClose: () => void }) => {
@@ -106,7 +107,7 @@ export default function Navbar() {
       py={2}
       gap={2}
     >
-      <Text color="white" fontWeight="bold" my="auto">
+      <Text as={Link} to="/" color="white" fontWeight="bold" my="auto">
         Ride Sharring
       </Text>
       <Spacer />

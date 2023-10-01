@@ -82,7 +82,14 @@ export default function Form(props: IFormProps) {
                     formData[f.name] ||
                     (props.initialValues ? props.initialValues[f.name] : '')
                   }
-                  onChange={(e) => onChange(e.target.name, e.target.value)}
+                  onChange={(e) =>
+                    onChange(
+                      e.target.name,
+                      f.type === 'number'
+                        ? Number(e.target.value)
+                        : e.target.value,
+                    )
+                  }
                 />
               </Default>
             </Switch>
