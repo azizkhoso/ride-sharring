@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Radio, RadioGroup } from '@chakra-ui/react';
+import { Box, Flex, Heading, Radio } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
@@ -29,7 +29,9 @@ export default function Login() {
         loginAdmin();
       else setError('Invalid admin credentials');
     } else {
-      const user = await User.find({ key: 'email', value: data.email });
+      const user = await User.find([
+        { key: 'email', op: '==', value: data.email },
+      ]);
       if (user[0]) {
         // user is found
         if (user[0].password === data.password) {

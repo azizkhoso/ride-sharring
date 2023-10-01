@@ -9,6 +9,7 @@ import {
   query,
   where,
   getDocs,
+  WhereFilterOp,
 } from 'firebase/firestore';
 import * as yup from 'yup';
 
@@ -67,13 +68,18 @@ export default class FirebaseModel {
     }
   };
 
-  find = async (options: {
-    key: string;
-    value: any;
-  }): Promise<Record<string, any>[]> => {
+  find = async (
+    options: {
+      key: string;
+      value: any;
+      op: WhereFilterOp;
+    }[],
+  ): Promise<Record<string, any>[]> => {
     try {
-      console.log({ options });
-      const q = query(this.collection, where(options.key, '==', options.value));
+      const q = query(
+        this.collection,
+        ...options.map((opt) => where(opt.key, opt.op, opt.value)),
+      );
       const querySnapshot = await getDocs(q);
       const docs: any[] = [];
       querySnapshot.forEach((snapshot) =>
@@ -81,7 +87,6 @@ export default class FirebaseModel {
       );
       return docs;
     } catch (error: any) {
-      console.log(error);
       if (typeof error === 'object') throw error?.message;
       else if (typeof error === 'string') throw error;
       else throw JSON.stringify(error || {});
@@ -93,10 +98,13 @@ export default class FirebaseModel {
       console.log('before constraints check');
 
       if (this.constraints.unique) {
-        this.find({
-          key: this.constraints.unique,
-          value: data[this.constraints.unique],
-        }).then((foundDocs) => {
+        this.find([
+          {
+            key: this.constraints.unique,
+            op: '==',
+            value: data[this.constraints.unique],
+          },
+        ]).then((foundDocs) => {
           if (foundDocs.length > 1)
             rej(`Unique constraint ${this.constraints.unique} is violated.`);
           else {

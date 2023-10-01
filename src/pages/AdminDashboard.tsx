@@ -1,7 +1,8 @@
 import React from 'react';
 import useAuth from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Box, Heading } from '@chakra-ui/react';
+import Users from '../components/Admin/Users';
 
 export default function AdminDashboard() {
   const { isAdmin } = useAuth();
@@ -13,6 +14,9 @@ export default function AdminDashboard() {
   return (
     <Box className="flex flex-col">
       <Heading>Welcome Admin</Heading>
+      <Routes>
+        <Route path="users" element={<Users />} />
+      </Routes>
     </Box>
   );
 }

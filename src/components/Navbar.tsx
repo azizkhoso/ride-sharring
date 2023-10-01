@@ -24,7 +24,10 @@ const publicLinks = [
 
 const userLinks = [{ title: 'Dashboard', link: '/dashboard' }];
 
-const adminLinks = [{ title: 'Dashboard', link: '/admin' }];
+const adminLinks = [
+  { title: 'Dashboard', link: '/admin' },
+  { title: 'Users ', link: '/admin/users' },
+];
 
 const MobileMenu = (props: { isOpen: boolean; onClose: () => void }) => {
   const { user, isAdmin } = useAuth();
@@ -101,6 +104,7 @@ export default function Navbar() {
       w="full"
       px={6}
       py={2}
+      gap={2}
     >
       <Text color="white" fontWeight="bold" my="auto">
         Ride Sharring
@@ -130,11 +134,6 @@ export default function Navbar() {
             ))}
           </Default>
         </Switch>
-        <When condition={isAdmin || Boolean(user)}>
-          <Button variant="solid" onClick={() => logout()}>
-            Logout
-          </Button>
-        </When>
       </HStack>
       <Button
         variant="solid"
@@ -146,6 +145,11 @@ export default function Navbar() {
       >
         ::
       </Button>
+      <When condition={isAdmin || Boolean(user)}>
+        <Button variant="solid" onClick={() => logout()} my="auto">
+          Logout
+        </Button>
+      </When>
       <MobileMenu isOpen={isOpen} onClose={onClose} />
     </Box>
   );

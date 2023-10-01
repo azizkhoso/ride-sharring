@@ -4,7 +4,7 @@ export default function useFetch<T>(
   fn: (args?: any) => Promise<any>,
   options: {
     onSuccess: (data: T) => any;
-    onError: (err: string) => any;
+    onError?: (err: string) => any;
     execOnMount?: boolean;
   },
 ) {
@@ -21,7 +21,7 @@ export default function useFetch<T>(
         if (typeof error === 'object') e = error?.message;
         else if (typeof error === 'string') e = error;
         else e = JSON.stringify(error || {});
-        options.onError(e);
+        if (typeof options.onError === 'function') options.onError(e);
         setError(e);
       })
       .finally(() => setLoading(false));
