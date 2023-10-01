@@ -51,6 +51,7 @@ export default function Users() {
   const [users, setUsers] = React.useState<IUser[]>([]);
   const { isLoading, error } = useFetch<IUser[]>(User.find, {
     onSuccess: (usrs) => setUsers(usrs),
+    execOnMount: true,
   });
   return (
     <Box className="flex flex-col">

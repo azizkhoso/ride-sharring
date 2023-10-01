@@ -69,7 +69,7 @@ export default function Login() {
         validationSchema={loginSchema}
         isLoading={isLoading}
         onSubmit={(d) => handleLogin({ email: d.email, password: d.password })}
-        submitButtonText="Register"
+        submitButtonText="Login"
       />
     </Box>
   );
