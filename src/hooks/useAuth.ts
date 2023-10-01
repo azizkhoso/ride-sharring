@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IUser } from '../models/User';
+import User, { IUser } from '../models/User';
 
 interface IUseAuth {
   user: undefined | IUser;
@@ -7,9 +7,10 @@ interface IUseAuth {
   login: (usr: IUser) => any;
   loginAdmin: () => any;
   logout: () => any;
+  refresh: () => any;
 }
 
-const useAuth = create<IUseAuth>((set) => ({
+const useAuth = create<IUseAuth>((set, get) => ({
   user: undefined,
   login: (usr: IUser) => {
     set(() => ({ user: usr }));
@@ -19,6 +20,12 @@ const useAuth = create<IUseAuth>((set) => ({
   },
   logout: () => {
     set((st) => ({ ...st, user: undefined, isAdmin: false }));
+  },
+  refresh: () => {
+    const usr = get().user;
+    User.findById(usr?.id || '').then(() => {
+      set((st) => ({ ...st, user: usr }));
+    });
   },
 }));
 

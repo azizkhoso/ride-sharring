@@ -82,9 +82,10 @@ export default class FirebaseModel {
       );
       const querySnapshot = await getDocs(q);
       const docs: any[] = [];
-      querySnapshot.forEach((snapshot) =>
-        docs.push({ id: snapshot.id, ...snapshot.data() }),
-      );
+      querySnapshot.forEach((snapshot) => {
+        const data = { id: snapshot.id, ...snapshot.data() };
+        docs.push(data);
+      });
       return docs;
     } catch (error: any) {
       console.log({ error });

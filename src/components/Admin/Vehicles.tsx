@@ -60,7 +60,17 @@ export default function Vehicles() {
           { label: 'Plate Number', name: 'plateNumber', type: 'text' },
           { label: 'Seats', name: 'seats', type: 'number' },
           { label: 'Ticket Price', name: 'ticketPrice', type: 'number' },
-          { label: 'Spots (comma-seprated)', name: 'spots', type: 'text' },
+          {
+            label: 'Spots',
+            name: 'spots',
+            type: 'select',
+            options: [
+              { title: 'A->B->C', value: 'A,B,C' },
+              { title: 'D->B->C', value: 'D,B,C' },
+              { title: 'A->D->C', value: 'A,D,C' },
+              { title: 'C->B->A', value: 'C,B,A' },
+            ],
+          },
         ]}
         validationSchema={vehicleSchema}
         isLoading={isCreating}

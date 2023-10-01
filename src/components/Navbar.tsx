@@ -22,7 +22,10 @@ const publicLinks = [
   { title: 'Register', link: '/register' },
 ];
 
-const userLinks = [{ title: 'Dashboard', link: '/dashboard' }];
+const userLinks = [
+  { title: 'Dashboard', link: '/dashboard' },
+  { title: 'Rides', link: '/dashboard/rides' },
+];
 
 const adminLinks = [
   { title: 'Dashboard', link: '/admin' },

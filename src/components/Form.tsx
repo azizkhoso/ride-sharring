@@ -66,6 +66,7 @@ export default function Form(props: IFormProps) {
                     formData[f.name] ||
                     (props.initialValues ? props.initialValues[f.name] : '')
                   }
+                  onChange={(e) => onChange(f.name, e.target.value)}
                 >
                   {f.options?.map((op) => (
                     <option key={op.title} value={op.value}>

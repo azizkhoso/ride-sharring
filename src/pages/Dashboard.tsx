@@ -1,7 +1,9 @@
 import React from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Box, Heading, Text } from '@chakra-ui/react';
+
 import useAuth from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
-import { Box, Heading } from '@chakra-ui/react';
+import Rides from '../components/User/Rides';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -13,6 +15,10 @@ export default function Dashboard() {
   return (
     <Box className="flex flex-col">
       <Heading>Welcome {user?.name}</Heading>
+      <Text>Your remaining balance is {user?.balance}</Text>
+      <Routes>
+        <Route path="rides" element={<Rides />} />
+      </Routes>
     </Box>
   );
 }
