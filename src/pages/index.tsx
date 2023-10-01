@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Box, Heading, Stack, StackItem } from '@chakra-ui/react';
 import Navbar from '../components/Navbar';
 import Register from './Register';
+import Login from './Login';
+import Dashboard from './Dashboard';
 
 export default function Pages() {
   return (
@@ -20,7 +22,8 @@ export default function Pages() {
                 </Stack>
               }
             />
-            <Route path="/login" element={<>Login</>} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Routes>
         </Box>

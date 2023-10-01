@@ -60,22 +60,31 @@ export default class FirebaseModel {
       if (d.exists()) {
         return { id: d.id, ...d.data() };
       } else return undefined;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      if (typeof error === 'object') throw error?.message;
+      else if (typeof error === 'string') throw error;
+      else throw JSON.stringify(error || {});
     }
   };
 
-  find = async (key: string, value: any): Promise<Record<string, any>[]> => {
+  find = async (options: {
+    key: string;
+    value: any;
+  }): Promise<Record<string, any>[]> => {
     try {
-      const q = query(this.collection, where(key, '==', value));
+      console.log({ options });
+      const q = query(this.collection, where(options.key, '==', options.value));
       const querySnapshot = await getDocs(q);
       const docs: any[] = [];
       querySnapshot.forEach((snapshot) =>
         docs.push({ id: snapshot.id, ...snapshot.data() }),
       );
       return docs;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      console.log(error);
+      if (typeof error === 'object') throw error?.message;
+      else if (typeof error === 'string') throw error;
+      else throw JSON.stringify(error || {});
     }
   };
 
@@ -84,22 +93,23 @@ export default class FirebaseModel {
       console.log('before constraints check');
 
       if (this.constraints.unique) {
-        this.find(this.constraints.unique, data[this.constraints.unique]).then(
-          (foundDocs) => {
-            if (foundDocs.length > 1)
-              rej(`Unique constraint ${this.constraints.unique} is violated.`);
-            else {
-              try {
-                this.schema.validateSync(data, { abortEarly: true });
-                addDoc(this.collection, data)
-                  .then((newDoc) => res(newDoc.id))
-                  .catch(rej);
-              } catch (e: any) {
-                rej(e.message);
-              }
+        this.find({
+          key: this.constraints.unique,
+          value: data[this.constraints.unique],
+        }).then((foundDocs) => {
+          if (foundDocs.length > 1)
+            rej(`Unique constraint ${this.constraints.unique} is violated.`);
+          else {
+            try {
+              this.schema.validateSync(data, { abortEarly: true });
+              addDoc(this.collection, data)
+                .then((newDoc) => res(newDoc.id))
+                .catch(rej);
+            } catch (e: any) {
+              rej(e.message);
             }
-          },
-        );
+          }
+        });
       }
     });
 
@@ -108,8 +118,10 @@ export default class FirebaseModel {
       const validated = this.schema.validateSync(data, { abortEarly: true });
       await updateDoc(doc(this.collection, id), validated);
       return validated;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      if (typeof error === 'object') throw error?.message;
+      else if (typeof error === 'string') throw error;
+      else throw JSON.stringify(error || {});
     }
   };
 

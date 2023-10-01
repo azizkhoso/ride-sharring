@@ -1,14 +1,15 @@
 import { Box, Heading } from '@chakra-ui/react';
 
-import User, { IUser, userSchema } from '../models/User';
+import User, { userSchema } from '../models/User';
 import Form from '../components/Form';
 import useFetch from '../hooks/useFetch';
 import Error from '../components/Error';
 
 export default function Register() {
-  const { isLoading, error, exec } = useFetch<IUser>(User.create, {
+  const { isLoading, error, exec } = useFetch(User.create, {
     onSuccess: (usr) => console.log({ usr }),
     onError: (err) => console.log(err),
+    execOnMount: false,
   });
   return (
     <Box className="flex flex-col" w="full">

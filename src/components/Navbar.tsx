@@ -20,7 +20,7 @@ export default function Navbar() {
       py={2}
     >
       <Text color="white" fontWeight="bold">
-        My App
+        Ride Sharring
       </Text>
       <Spacer />
       <HStack>

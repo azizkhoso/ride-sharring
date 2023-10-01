@@ -1,14 +1,15 @@
 import { create } from 'zustand';
+import { IUser } from '../models/User';
 
 interface IUseAuth {
-  user: undefined | Record<string, any>;
-  login: (usr: Record<string, any>) => any;
+  user: undefined | IUser;
+  login: (usr: IUser) => any;
   logout: () => any;
 }
 
 const useAuth = create<IUseAuth>((set) => ({
   user: undefined,
-  login: (usr: Record<string, any>) => {
+  login: (usr: IUser) => {
     set(() => ({ user: usr }));
   },
   logout: () => {
