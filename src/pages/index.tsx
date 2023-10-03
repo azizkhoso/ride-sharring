@@ -19,7 +19,7 @@ export default function Pages() {
               element={
                 <Stack>
                   <StackItem>
-                    <Heading>Welcome to my app</Heading>
+                    <Heading>Welcome to Ride Sharing</Heading>
                   </StackItem>
                 </Stack>
               }
