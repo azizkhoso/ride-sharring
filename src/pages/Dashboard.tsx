@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { Box, Heading, Text } from '@chakra-ui/react';
 
 import useAuth from '../hooks/useAuth';
@@ -17,6 +17,7 @@ export default function Dashboard() {
       <Heading>Welcome {user?.name}</Heading>
       <Text>Your remaining balance is {user?.balance}</Text>
       <Routes>
+        <Route index element={<Navigate replace to="rides" />} />
         <Route path="rides" element={<Rides />} />
       </Routes>
     </Box>

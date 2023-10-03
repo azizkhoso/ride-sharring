@@ -1,10 +1,11 @@
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Heading, Image } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 
 import User, { userSchema } from '../models/User';
 import Form from '../components/Form';
 import useFetch from '../hooks/useFetch';
 import Error from '../components/Error';
-import { useNavigate } from 'react-router-dom';
+import vehicleImage from '../images/vehicle-greenline.jpeg';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ export default function Register() {
       <Heading textAlign="center" my={6}>
         Register
       </Heading>
+      <Image src={vehicleImage} alt="vehicle" maxW="700px" mx="auto" />
       <Error mt={2} message={error} />
       <Form
         fields={[

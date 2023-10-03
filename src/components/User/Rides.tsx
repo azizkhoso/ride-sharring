@@ -1,6 +1,6 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-import { Case, Switch } from 'react-if';
+import { Case, Switch, When } from 'react-if';
 
 import Ride from '../../models/Ride';
 import useFetch from '../../hooks/useFetch';
@@ -10,7 +10,7 @@ import Error from '../Error';
 import RenderTable from '../RenderTable';
 import Form from '../Form';
 import useAuth from '../../hooks/useAuth';
-import Vehicle from '../../models/Vehicle';
+import Vehicle, { IVehicle } from '../../models/Vehicle';
 import User from '../../models/User';
 
 export default function Rides() {
@@ -30,20 +30,23 @@ export default function Rides() {
   );
   const [isCreating, setCreating] = React.useState(false);
 
+  const [vh, setVh] = React.useState<IVehicle>();
+
   const handleCreate = async (spots: string) => {
     setError('');
     setCreating(true);
     const alreadyCreatedRide = allRides.find((r) =>
       r.users.find((u) => u.id === user?.id),
     );
+    const [vehicle] = await Vehicle.find([
+      { key: 'spots', op: '==', value: spots },
+    ]);
+    setVh(vehicle as IVehicle);
     if (alreadyCreatedRide) {
       setError('You have already a booking');
       setCreating(false);
       return;
     }
-    const [vehicle] = await Vehicle.find([
-      { key: 'spots', op: '==', value: spots },
-    ]);
     if (!vehicle) {
       setError('Vehicle not found');
       setCreating(false);
@@ -83,7 +86,7 @@ export default function Rides() {
   };
   return (
     <Box className="flex flex-col">
-      <Heading mt="8">Ride Bookings</Heading>
+      <Heading mt="8">Bookings</Heading>
       <Switch>
         <Case condition={isAllLoading}>
           <Loader />
@@ -117,9 +120,20 @@ export default function Rides() {
         </Case>
         <Case condition={userRides.length >= 0}>
           <Heading textAlign="center" my={6}>
-            Add Ride
+            Book Ride
           </Heading>
           <Error mt={2} message={err} />
+          <When condition={Boolean(vh)}>
+            <Heading as="h5">Found Vehicle info</Heading>
+            <Text>
+              <b>Model:</b>
+              {vh?.model}
+            </Text>
+            <Text>
+              <b>Plate number:</b>
+              {vh?.plateNumber}
+            </Text>
+          </When>
           <Form
             fields={[
               {

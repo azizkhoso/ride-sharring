@@ -8,6 +8,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   HStack,
+  Image,
   Spacer,
   Text,
   VStack,
@@ -16,6 +17,8 @@ import {
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import { Case, Default, Switch, When } from 'react-if';
+
+import vehicleImage from '../images/vehicle-greenline.jpeg';
 
 const publicLinks = [
   { title: 'Login', link: '/login' },
@@ -43,6 +46,7 @@ const MobileMenu = (props: { isOpen: boolean; onClose: () => void }) => {
           <Box className="flex items-center" gap={6}>
             <Box as={Link} to="/" className="link">
               <Text color="primary.500" fontWeight="bold" my="auto">
+                <Image src={vehicleImage} alt="vehicle" maxW="50px" />
                 Ride Sharring
               </Text>
             </Box>
@@ -110,7 +114,16 @@ export default function Navbar() {
       py={2}
       gap={2}
     >
-      <Text as={Link} to="/" color="white" fontWeight="bold" my="auto">
+      <Text
+        as={Link}
+        to="/"
+        color="white"
+        fontWeight="bold"
+        my="auto"
+        className="flex items-center"
+        gap={2}
+      >
+        <Image src={vehicleImage} alt="vehicle" maxW="50px" />
         Ride Sharring
       </Text>
       <Spacer />

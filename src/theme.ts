@@ -23,6 +23,18 @@ const theme = {
       900: '#414141',
     },
     primary: {
+      50: '#f5f4f8',
+      100: '#ebeaf2',
+      200: '#d7d4e4',
+      300: '#c2bfd7',
+      400: '#aea9c9',
+      500: '#9A94BC',
+      600: '#7b7696',
+      700: '#5c5971',
+      800: '#3e3b4b',
+      900: '#1f1e26',
+    },
+    primaryorange: {
       50: '#fee8ef',
       100: '#fcd1df',
       200: '#faa3be',
@@ -61,6 +73,9 @@ const theme = {
   },
   styles: {
     global: {
+      '*': {
+        fontFamily: 'Arial, sans-serif',
+      },
       '.flex': {
         display: 'flex',
       },

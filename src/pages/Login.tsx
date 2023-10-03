@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex, Heading, Radio } from '@chakra-ui/react';
+import { Box, Flex, Heading, Radio, Image } from '@chakra-ui/react';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +7,7 @@ import User, { IUser } from '../models/User';
 import Form from '../components/Form';
 import Error from '../components/Error';
 import useAuth from '../hooks/useAuth';
+import vehicleImage from '../images/electric-vehicle-StartupTalky.jpg';
 
 const loginSchema = yup.object({
   email: yup.string().email('Invalid email').required('Email is required'),
@@ -52,6 +53,7 @@ export default function Login() {
       <Heading textAlign="center" my={6}>
         Login as {isAdmin ? 'Admin' : 'User'}
       </Heading>
+      <Image src={vehicleImage} alt="vehicle" maxW="700px" mx="auto" />
       <Flex gap={4} w="fit-content" mx="auto">
         <Radio isChecked={isAdmin} onChange={() => setAdmin(!isAdmin)}>
           Admin
